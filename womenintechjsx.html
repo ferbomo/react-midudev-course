@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Static Template</title>
+    <style>
+      picture {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        width: 100px;
+      }
+      img {
+        box-shadow: 0 0 15px #999;
+        border-radius: 50px;
+        width: 100px;
+      }
+      img.disabled {
+        opacity: 0.3;
+      }
+    </style>
+    <script
+      src="https://unpkg.com/react@16/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  </head>
+  <body>
+    <h1>Women in Tech</h1>
+    <div id="app"></div>
+    <script type="text/babel">
+      const $app = document.getElementById("app");
+      const h = React.createElement;
+      const Avatar = params => {
+        const src = `https://randomuser.me/api/portraits/women/${
+          params.id
+        }.jpg`;
+
+        return (
+          <picture>
+            <img
+              onClick={event => {
+                event.target.classList.toggle("disabled");
+              }}
+              src={src}
+            />
+            <strong>{params.name}</strong>
+          </picture>
+        );
+      };
+
+      ReactDOM.render(
+        <div>
+          <Avatar id={57} name="Ana" />
+          <Avatar id={58} name="Manuela" />
+        </div>,
+        $app
+      );
+    </script>
+  </body>
+</html>

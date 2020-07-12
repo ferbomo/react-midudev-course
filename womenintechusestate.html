@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Static Template</title>
+    <style>
+      picture {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        width: 100px;
+      }
+      picture.is-small {
+        width: 50px;
+      }
+      picture.is-large {
+        width: 200px;
+      }
+      img {
+        box-shadow: 0 0 15px #999;
+        border-radius: 50%;
+        width: 100%;
+      }
+      img.disabled {
+        opacity: 0.3;
+      }
+    </style>
+    <script
+      src="https://unpkg.com/react@16/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  </head>
+  <body>
+    <h1>Women in Tech</h1>
+    <div id="app"></div>
+    <script type="text/babel">
+      const $app = document.getElementById("app");
+      const useState = React.useState;
+
+      const Avatar = ({ id, name = "Unknown", size }) => {
+        const [enabled, setEnabled] = useState(true);
+        const src = `https://randomuser.me/api/portraits/women/${id}.jpg`;
+
+        if (!id)
+          return (
+            <picture>
+              <img src="https://randomuser.me/api/portraits/lego/8.jpg" />
+            </picture>
+          );
+
+        const imgClassName = enabled ? "" : "disabled";
+        let pictureClassName = "";
+        if (size === "small") {
+          pictureClassName = "is-small";
+        } else if (size === "large") {
+          pictureClassName = "is-large";
+        }
+        return (
+          <picture className={pictureClassName}>
+            <img
+              onClick={() => setEnabled(!enabled)}
+              className={imgClassName}
+              src={src}
+            />
+            <strong>{name}</strong>
+          </picture>
+        );
+      };
+
+      Avatar.defaultProps = {
+        name: "unknown name "
+      };
+
+      ReactDOM.render(
+        <div>
+          <Avatar id={57} name="Ana" size="small" />
+          <Avatar id={58} name="Manuela" />
+          <Avatar id={12} size="large" />
+          <Avatar name="lego" size="small" />
+        </div>,
+        $app
+      );
+    </script>
+  </body>
+</html>
